@@ -215,7 +215,7 @@ Quando uma condição de atenção ou crítica é detectada:
 
 ---
 
-## Dashboards — Grafana
+## Dashboards - Grafana
 
 ### Dashboard de Status Atual
 
