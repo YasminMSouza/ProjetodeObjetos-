@@ -1,4 +1,4 @@
-# Sistema Inteligente para Monitoramento Ambiental de Animais Domésticos em Ambientes Externos
+# Monitoramento Ambiental de Animais Domésticos em Ambientes Externos
 
 ---
 
