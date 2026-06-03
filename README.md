@@ -18,7 +18,7 @@ O projeto está alinhado aos **Objetivos de Desenvolvimento Sustentável (ODS) 3
 
 Assista à explicação completa do projeto:
 
-> ⚠️ **[PREENCHER: inserir link do vídeo no YouTube após publicação]**
+> ⚠️  https://www.youtube.com/watch?v=5fRXgu9us0I 
 
 ---
 
