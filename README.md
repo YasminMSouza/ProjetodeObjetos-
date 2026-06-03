@@ -10,7 +10,7 @@ O sistema foi desenvolvido com dispositivo físico, utilizando ESP32, sensor de 
 
 Em caso de variações críticas de temperatura ou nível crítico de ração, o sistema gera alertas automáticos via WhatsApp API.
 
-O projeto está alinhado aos **Objetivos de Desenvolvimento Sustentável (ODS) 3** — Saúde e Bem-Estar — e **ODS 11** — Cidades e Comunidades Sustentáveis, da Agenda 2030 da ONU.
+O projeto está alinhado aos **Objetivos de Desenvolvimento Sustentável (ODS) 3** - Saúde e Bem-Estar - e **ODS 11** - Cidades e Comunidades Sustentáveis, da Agenda 2030 da ONU.
 
 ---
 
@@ -102,15 +102,7 @@ cd pet-monitoring-iot
 
 ### 2. Configurar o ESP32 (dispositivo físico)
 
-- Abrir o arquivo `esp32/sketch.ino` na Arduino IDE
-- Instalar as bibliotecas necessárias (listadas em `esp32/bibliotecas.txt`):
-  - `WiFi.h`
-  - `PubSubClient`
-  - `DHT sensor library`
-  - `NewPing` (para HC-SR04)
-- Configurar as credenciais de Wi-Fi e o endereço do broker MQTT no sketch
-- Realizar a calibração do HC-SR04 com o comedouro vazio (valor `d_max`)
-- Compilar e gravar o firmware no ESP32
+[preencher]!!!!!
 
 ---
 
