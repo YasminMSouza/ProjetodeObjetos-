@@ -101,8 +101,50 @@ cd pet-monitoring-iot
 
 ### 2. Configurar o ESP32 (dispositivo físico)
 
-[preencher]!!!!!
+**Materiais necessários:**
+- ESP32 DevKit V1
+- Sensor DHT11
+- Sensor ultrassônico HC-SR04
+- Cabos jumper
+- Cabo USB (para conectar o ESP32 ao computador)
 
+**Conexão dos componentes:**
+
+| Componente | Pino do componente | Pino do ESP32 |
+|---|---|---|
+| DHT11 | VCC | 3.3V |
+| DHT11 | GND | GND |
+| DHT11 | DATA | GPIO 15 |
+| HC-SR04 | VCC | 5V (VIN) |
+| HC-SR04 | GND | GND |
+| HC-SR04 | TRIG | GPIO 32 |
+| HC-SR04 | ECHO | GPIO 35 |
+
+**Configuração do ambiente:**
+
+1. Instalar a [Arduino IDE](https://www.arduino.cc/en/software)
+2. Abrir a Arduino IDE e ir em **File → Preferences** e adicionar a URL abaixo em *Additional boards manager URLs*:
+https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json 
+3. Ir em **Tools → Board → Boards Manager**, buscar por `esp32` e instalar
+4. Instalar as bibliotecas necessárias em **Tools → Manage Libraries**:
+   - `PubSubClient` (Nick O'Leary)
+   - `DHT sensor library` (Adafruit)
+
+**Configurar e gravar o código:**
+
+1. Abrir o arquivo `esp32/sketch.ino` na Arduino IDE
+2. Editar as linhas com suas credenciais:
+```cpp
+const char* ssid      = "SEU_WIFI";
+const char* password  = "SUA_SENHA";
+const char* mqtt_user = "SEU_USUARIO_MQTT";
+const char* mqtt_pass = "SUA_SENHA_MQTT";
+```
+3. Conectar o ESP32 ao computador via cabo USB
+4. Em **Tools → Board**, selecionar `ESP32 Dev Module`
+5. Em **Tools → Port**, selecionar a porta COM correspondente ao ESP32
+6. Clicar em **Upload** (seta →) para gravar o firmware
+7. Abrir o **Serial Monitor** (Tools → Serial Monitor, 115200 baud) para confirmar que o ESP32 conectou ao Wi-Fi e ao broker MQTT
 ---
 
 ### 3. Configurar o Node-RED
