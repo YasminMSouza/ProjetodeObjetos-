@@ -1,0 +1,186 @@
+[
+    {
+        "id": "54a36a02f6c6c903",
+        "type": "tab",
+        "label": "Fluxo 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "973a679d232e1ae3",
+        "type": "mqtt in",
+        "z": "54a36a02f6c6c903",
+        "name": "",
+        "topic": "pet/casinha/temperatura",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "9d39fe981014ef06",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 170,
+        "y": 120,
+        "wires": [
+            [
+                "7f790d17ec4960b5"
+            ]
+        ]
+    },
+    {
+        "id": "7f790d17ec4960b5",
+        "type": "json",
+        "z": "54a36a02f6c6c903",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 370,
+        "y": 140,
+        "wires": [
+            [
+                "8e60f952739f496d",
+                "9bd9bd84a57bf0d6"
+            ]
+        ]
+    },
+    {
+        "id": "8e60f952739f496d",
+        "type": "function",
+        "z": "54a36a02f6c6c903",
+        "name": "influx",
+        "func": "let d_max = 25;  // cm — calibrar na instalação (comedouro vazio)\n\nlet temp = parseFloat(msg.payload.temperatura);\nlet dist = parseFloat(msg.payload.distancia);\n\nif (isNaN(temp) || isNaN(dist)) return null;\n\nlet nivel = (1 - dist / d_max) * 100;\nnivel = Math.max(0, Math.min(100, nivel));  // trava entre 0 e 100\n\nmsg.payload = [{\n    temperatura: temp,\n    nivel_racao: nivel,\n    distancia: dist\n}];\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 100,
+        "wires": [
+            [
+                "89f3fdf6faa6f41d"
+            ]
+        ]
+    },
+    {
+        "id": "9bd9bd84a57bf0d6",
+        "type": "function",
+        "z": "54a36a02f6c6c903",
+        "name": "alerta",
+        "func": "let d_max = 25;  // mesmo valor da função 1\n\nlet temp = parseFloat(msg.payload.temperatura);\nlet dist = parseFloat(msg.payload.distancia);\nif (isNaN(temp) || isNaN(dist)) return null;\n\nlet nivel = (1 - dist / d_max) * 100;\nnivel = Math.max(0, Math.min(100, nivel));\n\n// fora da faixa segura?\nlet alertaTemp   = (temp > 33 || temp < 10);\nlet alertaRacao  = (nivel < 20);\n\nlet antTemp  = context.get(\"antTemp\")  || false;\nlet antRacao = context.get(\"antRacao\") || false;\ncontext.set(\"antTemp\", alertaTemp);\ncontext.set(\"antRacao\", alertaRacao);\n\nlet mensagens = [];\n\n// só quando ENTRA em alerta (borda de subida)\nif (alertaTemp && !antTemp) {\n    mensagens.push(`🚨 Temperatura ${temp.toFixed(1)}°C - risco ao animal!`);\n}\nif (alertaRacao && !antRacao) {\n    mensagens.push(`🍽️ Ração em ${nivel.toFixed(0)}% - reabasteça o comedouro!`);\n}\n\nif (mensagens.length === 0) return null;  // nada muda, não envia\n\nmsg.payload = { text: \"Casinha do pet:\\n\" + mensagens.join(\"\\n\") };\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 240,
+        "wires": [
+            [
+                "e9ea2d799d151c56"
+            ]
+        ]
+    },
+    {
+        "id": "e9ea2d799d151c56",
+        "type": "node-red-contrib-whatsapp-cmb-send-message",
+        "z": "54a36a02f6c6c903",
+        "name": "",
+        "credtype": "account",
+        "account": "b611e9887695ccc9",
+        "text": "payload",
+        "phonenumbervalue": "",
+        "apikeyvalue": "",
+        "apikeyinputtypemessage": "msg",
+        "phonenumberinputtypemessage": "msg",
+        "inputtypemessage": "msg",
+        "rejectssl": false,
+        "x": 720,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "89f3fdf6faa6f41d",
+        "type": "influxdb out",
+        "z": "54a36a02f6c6c903",
+        "influxdb": "9e654a5bdfc4cd7c",
+        "name": "",
+        "measurement": "leituras",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "s",
+        "retentionPolicyV18Flux": "",
+        "org": "iot",
+        "bucket": "sensores",
+        "x": 780,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "9d39fe981014ef06",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt://broker.hivemq.com",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "b611e9887695ccc9",
+        "type": "node-red-contrib-whatsapp-cmb-account",
+        "name": "MarianaAgostinho"
+    },
+    {
+        "id": "9e654a5bdfc4cd7c",
+        "type": "influxdb",
+        "hostname": "localhost",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "http://localhost:8086",
+        "timeout": 10,
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "3642a72819908edc",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-whatsapp-cmb": "1.0.3",
+            "node-red-contrib-influxdb": "0.7.0"
+        }
+    }
+]
