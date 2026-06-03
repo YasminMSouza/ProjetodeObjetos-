@@ -225,6 +225,7 @@ Painéis:
 - Status de conectividade do sistema (online/offline)
 
 ### Dashboard de Histórico
+<img width="931" height="430" alt="Captura de tela 2026-06-03 204656" src="https://github.com/user-attachments/assets/30783705-0045-4614-a8e4-0aabadc95b4e" />
 
 Painéis:
 - Registro do último abastecimento do comedouro
