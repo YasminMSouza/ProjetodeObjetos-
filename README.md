@@ -66,23 +66,22 @@ ESP32 (DHT11 + HC-SR04) → MQTT Broker → Node-RED → InfluxDB → Grafana
 ## Estrutura do Repositório
 
 ```text
-pet-monitoring-iot/
+ProjetodeObjetos-/
 │
 ├── esp32/
 │   ├── sketch.ino
-│   └── bibliotecas.txt
-│
+│  
 ├── node-red/
-│   └── flows.json
+│   └── fluxo.json
 │
 ├── grafana/
 │   └── dashboard.jpeg
 │
 ├── mqtt/
-│   └── topics.md
+│   └── mqtt.md
 │
 ├── influxdb/
-│   └── setup.md
+│   └── db.jpeg
 │
 └── README.md
 ```
