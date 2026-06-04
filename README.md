@@ -234,12 +234,16 @@ Painéis:
 
 ---
 
+
 ## Dados Armazenados no InfluxDB
 
 - **Fields (valores numéricos):** temperatura (°C) e percentual do nível de ração (%)
 - **Tags (metadados):** status da temperatura e status do nível de ração (verde, laranja ou vermelho)
 
 ---
+## API -  WhatsApp API (CallMeBot)
+- Funcionamento da API
+<img width="738" height="1600" alt="WhatsApp Image 2026-06-03 at 21 42 13" src="https://github.com/user-attachments/assets/874fcd52-7450-424b-960c-06880dcb2929" />
 
 ## Autores
 
