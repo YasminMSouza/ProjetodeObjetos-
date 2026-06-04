@@ -148,6 +148,7 @@ const char* mqtt_pass = "SUA_SENHA_MQTT";
 ---
 
 ### 3. Configurar o Node-RED
+<img width="949" height="349" alt="WhatsApp Image 2026-06-03 at 22 02 31" src="https://github.com/user-attachments/assets/c100f9c0-9181-4f38-9141-4015df6f31de" />
 
 - Importar o arquivo `node-red/flows.json`
 - Configurar o endereço do broker MQTT e as credenciais de autenticação
